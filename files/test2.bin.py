@@ -1,0 +1,3 @@
+b000ffff
+SYMBOL TABLE:
+00000000 main
