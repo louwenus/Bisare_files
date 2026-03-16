@@ -123,19 +123,19 @@ __soft_umulh:
         pop r0
         reti
 
-__soft_smulh
+__soft_smulh:
         push r6
         push r7
         push r8
         push r9
         
         copy r9 0
-        
-        and r5 r1 0x80000000
+        let r6 0x80000000
+        and r5 r1 r6
         skip 1 ifeq r5 0
         copy r9 r2
         
-        and r4 r2 0x80000000
+        and r4 r2 r6
         skip 1 ifeq r4 0
         add r9 r9 r1
 
@@ -215,7 +215,7 @@ __umull_alg_loop:
         add r2 r2 r1
         lsr r0 r0 1
         lsl r1 r1 1
-        jump _umull_alg_loop
+        jump __umull_alg_loop
 
 
 ;point d'entrée

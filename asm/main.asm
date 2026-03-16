@@ -1,6 +1,6 @@
 main:
         let r0 0x00FF00 ; green
-        call sceen_clr
+        call screen_clr
 
         let r0 65468
         let r1 987
