@@ -1,0 +1,2 @@
+mmio:
+        call 0

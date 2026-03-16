@@ -12,7 +12,7 @@ __sdivmul:
         push r4
         push r5
         skip 1 ifne r3 0b1001
-        jump __soft_smull
+        jump __soft_umull   ; umull == smull
         skip 1 ifne r3 0b1010
         jump __soft_smulh
         skip 1 ifne r3 0b1011
@@ -108,30 +108,6 @@ __soft_umull:
         pop r0
         reti
 
-__soft_smull:
-        copy r3 0
-
-        and r5 r1 0x80000000
-        skip 1 ifeq r5 0
-        sub r1 r3 r1
-        
-        and r4 r2 0x80000000
-        skip 1 ifeq r4 0
-        sub r2 r3 r2
-
-        copy r0 r2
-        call __umull_alg
-
-        xor r4 r4 r5 ; should the result be signed (xor of signs)
-        skip 1 ifeq r4 0
-        sub r2 r0 r2 ; r0 == 0 at mult end.
-
-        copy r1 r2
-        pop r5
-        pop r4
-        pop r0
-        reti
-
 __soft_umulh:
         push r6 ;reserve registers
         push r7
@@ -153,33 +129,20 @@ __soft_smulh
         push r8
         push r9
         
-        copy r3 0
+        copy r9 0
         
         and r5 r1 0x80000000
         skip 1 ifeq r5 0
-        sub r1 r3 r1
+        copy r9 r2
         
         and r4 r2 0x80000000
         skip 1 ifeq r4 0
-        sub r2 r3 r2
-
-        xor r9 r4 r5
+        add r9 r9 r1
 
         call __long_mul
 
-        skipto __soft_smulh_cleanup ifeq r9 0 ; no need to invert result sign
-        ; neg(x) = not(x) + 1
-        ; however the +1 apply to the lower half, it only transfert to this upper half
-        ; if not(x) is only ones (aka x is only 0)
-        ; no need to calculate the lower half by mult, __long_mult have it nearly ready!
-        lsl r7 r7 16
-        add r7 r7 r2 ; low * low + (carry << 16)
+        sub r1 r1 r9
 
-        not r1 r1
-        skip 1 ifne r7 0
-        add r1 1
-
-__soft_smulh_cleanup:
         pop r9
         pop r8
         pop r7
