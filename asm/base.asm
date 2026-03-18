@@ -3,7 +3,7 @@ jump mmio     ; mmio interupt
 call 0        ; swi interupt
 call 0        ; div0 interupt
 call 0        ; unaligned load store
-call __sdivmul; unsuported opcode
+jump __sdivmul; unsuported opcode
 call 0        ; iot
 
 

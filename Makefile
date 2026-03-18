@@ -1,19 +1,45 @@
 .PHONY: main submodule rust debug
 
-main: build/main.bin
-	cargo -C bisare_sim_rs -Z unstable-options run --release --features=rich_keyboard -p simu ../build/main.bin
+FEATURES="rich_keyboard,rgba"
+
+SOURCES=
+SOURCES+=base
+SOURCES+=main
+SOURCES+=mmio
+SOURCES+=graphic
+
+PIC=
+
+UNSIZED_PIC=
+UNSIZED_PIC+=fontplate
+
+sources_asm = $(patsubst %,asm/%.asm,$(SOURCES))
+pic_asm = $(patsubst %,build/pic_%.asm,$(PIC))
+unsized_pic_asm = $(patsubst %,build/upic_%.asm,$(UNSIZED_PIC))
+
+main: build/main.bin submodule
+	cargo -C bisare_sim_rs -Z unstable-options run --release --features=$(FEATURES) -p simu ../build/main.bin
 	
 
-build/main.bin: build asm/base.asm asm/main.asm asm/mmio.asm submodule
-	cat asm/base.asm asm/main.asm asm/mmio.asm | \
-	cargo -C bisare_sim_rs -Z unstable-options run --release -p asm - ../build/main.bin
+build/main.bin: $(pic_asm) $(unsized_pic_asm) build/prog.asm submodule 
+	cat build/prog.asm $(pic_asm) $(unsized_pic_asm) | \
+	./bisare_sim_rs/target/release/asm - build/main.bin
+
+build/prog.asm: $(sources_asm) build
+	cat $(sources_asm) > build/prog.asm
 
 build:
 	mkdir -p build
 
 submodule:
 	git submodule update --init --remote bisare_sim_rs
+	cargo -C bisare_sim_rs -Z unstable-options build --release -p asm -p bitmap_to_asm
 
-debug: build/main.bin
-	cargo -C bisare_sim_rs -Z unstable-options run --release --features=rich_keyboard,debug -p simu ../build/main.bin
-	
+debug: build/main.bin submodule
+	cargo -C bisare_sim_rs -Z unstable-options run --release --features=$(FEATURES),debug -p simu ../build/main.bin
+
+build/pic_%.asm: pictures/%.png submodule
+	./bisare_sim_rs/target/release/bitmap_to_asm $< > $@ 
+
+build/upic_%.asm: pictures/%.png submodule
+	./bisare_sim_rs/target/release/bitmap_to_asm $< --nosize > $@
