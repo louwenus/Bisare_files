@@ -4,7 +4,7 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont
 
 COLUMNS, ROWS = 1,256
-CHAR_WIDTH, CHAR_HEIGHT = 11, 16
+CHAR_WIDTH, CHAR_HEIGHT = 8, 16
 
 
 font_path = "PixelOperator-Bold.ttf"
