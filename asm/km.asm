@@ -30,4 +30,7 @@ line:
     loop_continue:
     skip 1 ifgt r2 479
         jump line
+hhalt:
+    nop
+    jump hhalt
 halt
