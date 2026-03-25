@@ -1,17 +1,18 @@
 .PHONY: main submodule rust debug
 
-FEATURES="rich_keyboard,rgba"
+FEATURES=rich_keyboard,rgba
 
 SOURCES=
 SOURCES+=base
-SOURCES+=main
-SOURCES+=mmio
-SOURCES+=graphic
+SOURCES+=bad_apple
+SOURCES+=bad_apple_vid
+# SOURCES+=mmio
+# SOURCES+=graphic
 
 PIC=
 
 UNSIZED_PIC=
-UNSIZED_PIC+=fontplate
+# UNSIZED_PIC+=fontplate
 
 sources_asm = $(patsubst %,asm/%.asm,$(SOURCES))
 pic_asm = $(patsubst %,build/pic_%.asm,$(PIC))

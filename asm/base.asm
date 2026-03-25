@@ -222,4 +222,4 @@ __umull_alg_loop:
 __start:
         let r0 0x00fffffc
         copy SP r0 ; setup stack pointer
-        ;eint
+        eint
