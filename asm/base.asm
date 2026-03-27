@@ -220,6 +220,6 @@ __umull_alg_loop:
 
 ;point d'entrée
 __start:
-        let r0 0x00fffffc
+        let r0 0x01000000
         copy SP r0 ; setup stack pointer
         eint
