@@ -25,6 +25,7 @@ PIC+=mine_chargee
 PIC+=zombie
 PIC+=zombie_casque
 PIC+=zombie_rapide
+PIC+=pois
 
 FONTPLATE_PIC=
 FONTPLATE_PIC+=fontplate
