@@ -77,7 +77,7 @@ main_game_logic_loop:
         umull r6 r6 20
         add r6 r6 r11
         load r4 [r9+12]
-        skipto main_loop_zombie_advance ifugt r4 35
+        skipto main_loop_zombie_advance ifugt r4 40
 
         load r0 [r6+8]
         load r1 [r9+8]
@@ -119,15 +119,55 @@ main_game_logic_loop:
         
         
         main_loop4:
-        pop r13
 
         ; update pseudo random
         load r9 [r15+24]
-        lsr r8 r9 5
-        sub r9 r8 r9
+        let r0 2690201
+        umull r9 r9 r0
         xor r9 r10 r9
         store [r15+24] r9
+
+        load r8 [r15+28]
+        load r6 [r8]
+        skip 1 ifuge r10 r6
+                jump main_loop5
         
+        load r7 [r15+32]
+        and r9 r9 3
+        add r7 r7 r9
+        add r7 r7 1 ;a different line from previous spawn, randomized
+        mod r7 r7 5
+
+        load r6 [r8+4] ; spread
+        copy r9 0
+        add r8 r8 8
+
+        main_loop_spawn_loop:
+                load r13 [r8]
+
+                main_loop_spawn_inner:
+                skipto main_loop_spawn_break ifle r13 0
+                        copy r0 r7
+                        copy r1 r9
+                        call create_zombie
+                        add r7 r7 r6
+                        skip 1 iflt r7 5
+                                sub r7 r7 5
+                        sub r13 r13 1
+                        jump main_loop_spawn_inner
+                main_loop_spawn_break:
+                
+                add r9 r9 1
+                add r8 r8 4
+                skip 1 ifeq r9 3
+                jump main_loop_spawn_loop
+
+        store [r15+28] r8
+        store [r15+32] r7
+        
+        
+        main_loop5:
+        pop r13
 
 jump main_game_logic_loop
 
@@ -195,7 +235,7 @@ create_plante:
         add r1 r1 r2
         umull r1 r1 12
 
-        ; handle price, exit of too costy
+        ; handle price, exit if too costy
         let r5 store_game_vars
         load r2 [r5]   ;soleils dispo
         load r4 [r3+4] ;prix
@@ -265,3 +305,32 @@ game_lost:
         let r3 picture_game_over
         call print_pict
         halt
+
+
+;Args: R0 ligne
+;Args: R1 Type
+create_zombie:
+        let r2 store_zombies
+        umull r0 r0 400
+        add r0 r0 r2
+create_zombie_slot_finder:
+        load r2 [r0]
+        skip 2 ifeq r2 -1
+                add r0 r0 40
+                jump create_zombie_slot_finder
+        
+
+        let r3 8
+        store [r0+8] r3
+        let r3 64
+        store [r0+12] r3
+        let r3 0x01200004
+        load r3 [r3]
+        store [r0+16] r3
+        store [r0] r1
+        let r3 store_zombie_data
+        umull r1 r1 20
+        add r1 r1 r3
+        load r3 [r3+4]
+        store [r0+4] r3
+        ret

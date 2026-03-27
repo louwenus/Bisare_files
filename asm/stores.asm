@@ -8,6 +8,8 @@
 ;    - dernière gen naturelle de soleil
 ;    - render? (divide fpr by 2 to consume less cpu for printing)
 ;    - pseudo random
+;    - next vague
+;    - dernière ligne utilisée
 ; plantes: 8*6,
 ;     - plante ID
 ;     - Vie
@@ -19,7 +21,7 @@
 ;     - fréquence (nb de milliseconde entre chaque attaque)
 ;     - pv
 ;     - ptr de fonction on death: args pos x y en case de la plante
-; zombies: 20 zombies par line * 5 line
+; zombies: 20 zombies per line * 5 line
 ;     - id
 ;     - vie
 ;     - x case
@@ -31,6 +33,12 @@
 ;     - dégats
 ;     - freq_atq
 ;     - speed (en ms/pix)
+; vagues
+;     - timer d'apparition
+;     - spread
+;     - nombre de zombie normaux
+;     - nombre de zombie casque
+;     - nombre de zombie rapide
 
 store_game_vars:
         d 50
@@ -40,6 +48,8 @@ store_game_vars:
         d 6000
         d 1
         d 0x1C5A2F7E
+        d store_vagues
+        d 0
 
 store_plantes_data:
 
@@ -122,7 +132,99 @@ store_zombie_data:
         d 30
         d 600
         d 40
-        
+
+store_vagues:
+        d 25000
+        d 0
+        d 1
+        d 0
+        d 0
+
+        d 50000
+        d 0
+        d 1
+        d 0
+        d 0
+
+        d 75000
+        d 0
+        d 1
+        d 0
+        d 0
+
+        d 90000
+        d 0
+        d 0
+        d 1
+        d 0
+
+        d 120000
+        d 0
+        d 0
+        d 0
+        d 1
+
+        d 122500
+        d 2
+        d 1
+        d 1
+        d 0
+
+        d 125000
+        d 1
+        d 1
+        d 1
+        d 0
+
+        d 181000
+        d 1
+        d 1
+        d 1
+        d 0
+
+        d 182500
+        d 1
+        d 4
+        d 1
+        d 1
+
+        d 240000
+        d 0
+        d 0
+        d 0
+        d 1
+
+        d 243000
+        d 2
+        d 1
+        d 0
+        d 1
+
+        d 244500
+        d 0
+        d 0
+        d 1
+        d 1
+
+        d 245800
+        d 0
+        d 2
+        d 0
+        d 1
+
+        d 312000
+        d 1
+        d 2
+        d 2
+        d 1
+
+        d 333000
+        d 0
+        d 0
+        d 2
+        d 1
+
+        d -1
 
 store_plantes:
         d -1 ; id
@@ -272,11 +374,11 @@ store_zombies:
         d -1
         d -1
 
-        d 0
-        d 0
-        d 8
-        d 65
-        d 0
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
 
         d -1
         d -1
@@ -388,11 +490,11 @@ store_zombies:
 
 
 
-        d 2
-        d 0
-        d 8
-        d 65
-        d 0
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
 
         d -1
         d -1
@@ -868,9 +970,9 @@ store_zombies:
         d -1
         d -1
 
-        d 1
-        d 0
-        d 8
-        d 63
-        d 0
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
 
