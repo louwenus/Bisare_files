@@ -63,10 +63,10 @@ apple: build/main.bin submodule
 appledebug: build/main.bin submodule
 	cargo -C bisare_sim_rs -Z unstable-options run --release --no-default-features --features=$(FEATURES),debug -p simu ../build/main.bin
 	
-build/pic_%.asm: pictures/%.png submodule
+build/pic_%.asm: pictures/%.png submodule build
 	./bitmap_to_asm/target/release/bitmap_to_asm $< > $@ 
 
-build/upic_%.asm: pictures/%.png submodule
+build/upic_%.asm: pictures/%.png submodule build
 	./bitmap_to_asm/target/release/bitmap_to_asm $< --fontplate > $@
 
 bad_apple: build submodule asm/bad_apple.asm asm/bad_apple_vid.asm asm/base.asm
