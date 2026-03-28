@@ -16,6 +16,7 @@ PIC=
 PIC+=background
 PIC+=game_over
 PIC+=tournesol
+PIC+=tournesol_gen
 PIC+=pistopois
 PIC+=noix
 PIC+=double_pistopois

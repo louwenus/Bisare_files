@@ -249,12 +249,15 @@ create_plante:
         add r4 r1 r4
 
         store [r4] r0
-        load r0 [r3+16]
-        store [r4+4] r0
-        load r0 [r3+12]
+        load r5 [r3+16]
+        store [r4+4] r5
+
+        let r5 24000
+        skip 1 ifeq r0 0 ; special case for tournesol due to animation making it the wrong timer
+                load r5 [r3+12]
         let r3 0x01200004 ; horloge
         load r3 [r3]
-        add r0 r0 r3
+        add r0 r5 r3
         store [r4+8] r0
 
 create_plante_end:

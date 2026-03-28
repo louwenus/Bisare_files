@@ -53,15 +53,15 @@ store_game_vars:
 
 store_plantes_data:
 
-        ; tournesol
+        ; tournesol 0
         d picture_tournesol
         d 50
         d action_tournesol
-        d 24000
+        d 1000
         d 125
         d fonction_null
         
-        ;pistopois
+        ;pistopois 1
         d picture_pistopois
         d 100
         d action_pistopois
@@ -69,7 +69,7 @@ store_plantes_data:
         d 125
         d fonction_null
 
-        ;cerise
+        ;cerise 2
         d picture_cerise
         d 150
         d action_cerise
@@ -77,7 +77,7 @@ store_plantes_data:
         d 1000
         d fonction_null
 
-        ;double_pistopois
+        ;double_pistopois 3
         d picture_double_pistopois
         d 200
         d action_pistopois
@@ -85,7 +85,7 @@ store_plantes_data:
         d 125
         d fonction_null
         
-        ;noix
+        ;noix 4
         d picture_noix
         d 50
         d fonction_null
@@ -93,7 +93,7 @@ store_plantes_data:
         d 1500
         d fonction_null
 
-        ;mine
+        ;mine 5
         d picture_mine_dechargee
         d 25
         d action_mine_charge
@@ -103,13 +103,22 @@ store_plantes_data:
 
         ;
 
-        ;mine_chargée
+        ;mine_chargée 6
         d picture_mine_chargee
         d 0
         d fonction_null
         d 10000
         d 1
         d action_mine_boom
+
+        ; tournesol_gen 7
+        d picture_tournesol_gen
+        d 50
+        d action_tournesol_gen
+        d 23000
+        d 125
+        d fonction_null
+        
 
 store_zombie_data:
         ; usual zombie

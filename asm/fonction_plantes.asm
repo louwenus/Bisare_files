@@ -2,10 +2,20 @@
 ;                     R1: coordonée y
 
 action_tournesol:
+        call get_self_ptr
+        let r3 7
+        store [r2] r3
+        
         let r0 store_game_vars
         load r1 [r0]
         add r1 r1 25
         store [r0] r1
+        ret
+
+action_tournesol_gen:
+        call get_self_ptr
+        let r3 0
+        store [r2] r3
         ret
 
 action_pistopois:
@@ -51,11 +61,7 @@ fonction_null:
         ret
 
 action_cerise:
-        let r2 store_plantes
-        umull r3 r1 9
-        add r3 r3 r0
-        umull r3 r3 12
-        add r2 r3 r2
+        call get_self_ptr
         copy r3 -1
         store [r2] r3 ; the cerise diseapear
 
@@ -128,3 +134,16 @@ mine_boom_kill:
 call_by_ptr:
         push r2  ;jump to r2 by absolute address
         ret      ;this is ugly but "it work TM"
+
+
+
+; args: r0 x
+;       r1 y
+; return: r0 r1 inchangé, r2: self ptr
+get_self_ptr:
+        let r2 store_plantes
+        umull r3 r1 9
+        add r3 r3 r0
+        umull r3 r3 12
+        add r2 r3 r2
+        ret
