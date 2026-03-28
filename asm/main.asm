@@ -58,6 +58,8 @@ main_game_logic_loop:
 
 
         push r13 ; we need a bit more room
+        push r14
+        copy r14 0
         
         let r9 store_zombies
         let r8 0 ; x in store
@@ -70,7 +72,8 @@ main_game_logic_loop:
         skip 1 iflt r7 5
                 jump main_loop4
         load r6 [r9]
-        skip 2 ifeq r6 -1
+        skip 3 ifeq r6 -1
+          add r14 r14 1
           load r13 [r9+16]
           skip 1 ifle r13 r10
                 jump main_loop_zombie_continue
@@ -129,6 +132,10 @@ main_game_logic_loop:
 
         load r8 [r15+28]
         load r6 [r8]
+        skipto not_ended ifne r6 -1
+                skip 1 ifne r14 0 ; zombie counter to 0
+                        jump win
+not_ended:
         skip 1 ifuge r10 r6
                 jump main_loop5
         
@@ -257,6 +264,7 @@ main_game_logic_loop:
 
         main_loop6:
         pop r11
+        pop r14
         pop r13
 
 jump main_game_logic_loop
@@ -399,6 +407,15 @@ game_lost:
         call print_pict
         halt
 
+win:
+        let r0 0x01201000
+        let r1 1
+        store [r0] r1
+        let r1 0
+        let r2 0
+        let r3 picture_win
+        call print_pict
+        halt
 
 ;Args: R0 ligne
 ;Args: R1 Type

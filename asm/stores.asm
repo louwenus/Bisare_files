@@ -147,13 +147,13 @@ store_zombie_data:
         d 40
 
 store_vagues:
-        d 15000
+        d 17000
         d 0
         d 1
         d 0
         d 0
 
-        d 25000
+        d 28000
         d 0
         d 1
         d 0
@@ -167,7 +167,7 @@ store_vagues:
 
         d 50250
         d 1
-        d 1
+        d 0
         d 1
         d 0
 
@@ -175,13 +175,13 @@ store_vagues:
         d 2
         d 1
         d 0
-        d 1
+        d 0
 
-        d 75250
+        d 76000
         d 3
         d 1
-        d 1
-        d 1
+        d 0
+        d 0
 
         d 90000
         d 0
@@ -191,14 +191,14 @@ store_vagues:
 
         d 90100
         d 1
-        d 2
+        d 1
         d 1
         d 0
 
         d 90250
         d 4
-        d 1
-        d 2
+        d 0
+        d 0
         d 1
 
         d 104000
@@ -275,6 +275,30 @@ store_vagues:
 
         d 242100
         d 4
+        d 2
+        d 2
+        d 2
+
+        d 250000
+        d 1
+        d 2
+        d 2
+        d 2
+
+        d 251000
+        d 2
+        d 2
+        d 2
+        d 2
+
+        d 252000
+        d 4
+        d 2
+        d 2
+        d 2
+
+        d 253000
+        d 3
         d 2
         d 2
         d 2

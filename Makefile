@@ -15,6 +15,7 @@ SOURCES+=fonction_plantes
 PIC=
 PIC+=background
 PIC+=game_over
+PIC+=win
 PIC+=tournesol
 PIC+=tournesol_gen
 PIC+=pistopois
