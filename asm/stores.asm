@@ -39,6 +39,10 @@
 ;     - nombre de zombie normaux
 ;     - nombre de zombie casque
 ;     - nombre de zombie rapide
+; pois 20*5 lignes
+;     - x case
+;     - x dans case
+;     - next move
 
 store_game_vars:
         d 50
@@ -143,6 +147,12 @@ store_zombie_data:
         d 40
 
 store_vagues:
+        d 15000
+        d 0
+        d 1
+        d 0
+        d 0
+
         d 25000
         d 0
         d 1
@@ -155,35 +165,65 @@ store_vagues:
         d 0
         d 0
 
-        d 75000
-        d 0
+        d 50250
+        d 1
+        d 1
         d 1
         d 0
+
+        d 75000
+        d 2
+        d 1
         d 0
+        d 1
+
+        d 75250
+        d 3
+        d 1
+        d 1
+        d 1
 
         d 90000
         d 0
-        d 0
+        d 1
         d 1
         d 0
 
+        d 90100
+        d 1
+        d 2
+        d 1
+        d 0
+
+        d 90250
+        d 4
+        d 1
+        d 2
+        d 1
+
+        d 104000
+        d 0
+        d 0
+        d 1
+        d 1
+
         d 120000
-        d 0
-        d 0
-        d 0
+        d 3
+        d 2
+        d 2
         d 1
 
         d 122500
         d 2
         d 1
-        d 1
-        d 0
+        d 2
+        d 2
 
         d 125000
         d 1
+        d 3
         d 1
         d 1
-        d 0
 
         d 181000
         d 1
@@ -203,35 +243,41 @@ store_vagues:
         d 0
         d 1
 
-        d 243000
+        d 240100
         d 2
         d 1
         d 0
         d 1
 
-        d 244500
+        d 240200
         d 0
         d 0
         d 1
         d 1
 
-        d 245800
+        d 241000
         d 0
         d 2
         d 0
         d 1
 
-        d 312000
+        d 241500
         d 1
         d 2
         d 2
         d 1
 
-        d 333000
-        d 0
-        d 0
-        d 2
+        d 242000
         d 1
+        d 2
+        d 2
+        d 2
+
+        d 242100
+        d 4
+        d 2
+        d 2
+        d 2
 
         d -1
 
@@ -985,3 +1031,313 @@ store_zombies:
         d -1
         d -1
 
+store_pois:
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1
+        d -1

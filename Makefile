@@ -1,6 +1,6 @@
-.PHONY: main submodule rust debug
+.PHONY: main submodule rust debug apple appledebug
 
-FEATURES=rich_keyboard,rgba,div_mul
+FEATURES=rgba
 
 SOURCES=
 SOURCES+=base
@@ -50,15 +50,31 @@ build:
 	mkdir -p build
 
 submodule:
-	git submodule update --init --remote bisare_sim_rs
+	git submodule update --init --remote bisare_sim_rs || true # fail silently if no connexion
 	cargo -C bisare_sim_rs -Z unstable-options build --release -p asm
 	cargo -C bitmap_to_asm -Z unstable-options build --release
 
 debug: build/main.bin submodule
 	cargo -C bisare_sim_rs -Z unstable-options run --release --features=$(FEATURES),debug -p simu ../build/main.bin
 	
+apple: build/main.bin submodule
+	cargo -C bisare_sim_rs -Z unstable-options run --release --no-default-features --features=$(FEATURES) -p simu ../build/main.bin
+
+appledebug: build/main.bin submodule
+	cargo -C bisare_sim_rs -Z unstable-options run --release --no-default-features --features=$(FEATURES),debug -p simu ../build/main.bin
+	
 build/pic_%.asm: pictures/%.png submodule
 	./bitmap_to_asm/target/release/bitmap_to_asm $< > $@ 
 
 build/upic_%.asm: pictures/%.png submodule
 	./bitmap_to_asm/target/release/bitmap_to_asm $< --fontplate > $@
+
+bad_apple: build submodule asm/bad_apple.asm asm/bad_apple_vid.asm asm/base.asm
+	cat asm/base.asm asm/bad_apple.asm asm/bad_apple_vid.asm > build/bad_apple.asm
+	./bisare_sim_rs/target/release/asm build/bad_apple.asm build/bad_apple.bin
+	cargo -C bisare_sim_rs -Z unstable-options run --release -p simu ../build/bad_apple.bin
+	
+bad_apple_mac: build submodule asm/bad_apple.asm asm/bad_apple_vid.asm asm/base.asm
+	cat asm/base.asm asm/bad_apple.asm asm/bad_apple_vid.asm > build/bad_apple.asm
+	./bisare_sim_rs/target/release/asm build/bad_apple.asm build/bad_apple.bin
+	cargo -C bisare_sim_rs -Z unstable-options run --release --no-default-features -p simu ../build/bad_apple.bin

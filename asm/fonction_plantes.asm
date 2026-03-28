@@ -19,43 +19,25 @@ action_tournesol_gen:
         ret
 
 action_pistopois:
-        push r6
-
-        let r2 store_zombies
-        umull r1 r1 400
+        let r2 store_pois
+        umull r1 r1 240
         add r1 r1 r2
+        let r2 50
 
-        copy r2 -1;ptr
-        copy r3 -1;distance
-        copy r4 0;conteur
-pistopois_loop_min:
-        load r5 [r1]
-        skipto pistopois_loop_continue ifeq r5 -1 ; no zombie
-        load r5 [r1+8]
-        skipto pistopois_loop_continue iflt r5 r0 ; zombie on the left
-        load r6 [r1+12]
-        lsl r5 r5 7
-        add r5 r5 r6
-        skipto pistopois_loop_continue ifugt r5 r3 ; a nearer one was found previously
-        copy r3 r5
-        copy r2 r1
-pistopois_loop_continue:
-        add r4 r4 1
-        skipto pistopois_loop_end ifge r4 20
-        add r1 r1 20
-        jump pistopois_loop_min
-pistopois_loop_end:
-        skipto pistopois_end ifeq r2 -1
-        load r3 [r2+4]
-        sub r3 r3 10
-        store [r2+4] r3
-        skipto pistopois_end ifgt r3 0
-        copy r3 -1
-        store [r2] r3
+pistopois_find_slot:
+        load r3 [r1]
+        skipto pistopois_continue ifne r3 -1
+                store [r1+4] r2
+                store [r1] r0
+                let r2 0x01200004
+                load r2 [r2]
+                store [r1+8] r2
+                ret
 
-pistopois_end:
-        pop r6
-        ret
+        pistopois_continue:
+        add r1 r1 12
+        jump pistopois_find_slot
+        
 
 fonction_null:
         ret

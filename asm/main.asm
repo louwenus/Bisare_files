@@ -9,7 +9,7 @@ main:
         let r12 store_plantes_data
         let r11 store_zombie_data
         
-        ; halt
+        ;halt
 main_game_logic_loop:
         load r10 [r14] ; clock actual
 
@@ -167,6 +167,96 @@ main_game_logic_loop:
         
         
         main_loop5:
+
+        let r13 store_pois
+        push r11
+        let r11 store_zombies
+        let r9 0 ; line
+        let r8 0 ; counter in line
+
+        main_loop_pois:
+
+
+        load r0 [r13]
+        skip 1 ifne r0 -1
+                jump main_loop_pois_continue
+        load r2 [r13+8]
+        skip 1 ifge r10 r2
+                jump main_loop_pois_continue
+        add r2 r2 10
+        store [r13+8] r2
+        load r1 [r13+4]
+
+        add r1 r1 3
+        skip 6 ifle r1 64
+                sub r1 r1 65
+                add r0 r0 1
+                skip 3 iflt r0 9
+                copy r0 -1
+                store [r13] r0
+                jump main_loop_pois_continue
+                
+        store [r13+4] r1
+        store [r13] r0 ; may not have changed but i do not care
+
+        ; scan zombie to find a nearby one
+        let r7 0 ; counter
+        copy r6 r11
+
+
+
+        loop_pois_find_zombie:
+                load r2 [r6]
+                skipto loop_pois_find_continue ifeq r2 -1
+                load r2 [r6+8]
+                load r3 [r6+12]
+
+                skipto loop_pois_find_continue ifgt r2 r0
+                skip 2 ifeq r0 r2
+                        sub r2 r2 1
+                        add r3 r3 65
+                skipto loop_pois_find_continue iflt r0 r2
+                add r3 r3 3
+                skipto loop_pois_find_continue iflt r3 r1
+                sub r3 r3 6
+                skipto loop_pois_find_continue ifgt r3 r1
+                jump loop_pois_found_zombie
+                                
+        loop_pois_find_continue:
+                add r7 r7 1
+                add r6 r6 20
+                skipto main_loop_pois_continue ifge r7 20
+        jump loop_pois_find_zombie
+
+        
+        loop_pois_found_zombie:
+        ; r6 is the zombie ptr
+        test_label:
+        copy r5 -1
+        store [r13] r5 ; destroy the pois
+        load r4 [r6+4]
+        sub r4 r4 10
+        store [r6+4] r4
+        skip 1 ifgt r4 0
+                store [r6] r5
+
+        
+        main_loop_pois_continue:
+        add r8 r8 1
+        add r13 r13 12
+        skip 4 iflt r8 20
+                copy r8 0
+                add r9 r9 1
+                add r11 r11 400
+                skip 1 ifge r9 5
+        jump main_loop_pois
+        
+
+
+
+
+        main_loop6:
+        pop r11
         pop r13
 
 jump main_game_logic_loop
@@ -337,3 +427,4 @@ create_zombie_slot_finder:
         load r3 [r3+4]
         store [r0+4] r3
         ret
+

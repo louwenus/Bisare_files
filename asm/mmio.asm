@@ -179,6 +179,40 @@ display_zombie_loop_continue:
         skip 1 ifeq r6 5
                 jump display_zombie_loop
 
+
+
+        ; -----
+        ; pois
+        ; -----
+
+        let r10 picture_pois
+        let r9 store_pois
+        let r8 0 ; counter in line
+        let r7 0 ; line
+        let r6 75;
+
+display_pois_loop:
+        load r0 [r9]
+        skipto display_pois_continue ifeq r0 -1
+        umull r0 r0 65
+        add r0 r0 23
+        load r1 [r9+4]
+        add r1 r1 r0
+        copy r2 r6
+        copy r3 r10
+        call print_pict
+
+        display_pois_continue:
+        add r9 r9 12
+        add r8 r8 1
+        skip 4 iflt r8 20
+                add r7 r7 1
+                copy r8 0
+                add r6 r6 77
+        
+                skip 1 ifeq r7 5
+        jump display_pois_loop
+
         pop r10
         pop r9
         pop r8
