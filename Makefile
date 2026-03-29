@@ -51,7 +51,8 @@ build:
 	mkdir -p build
 
 submodule:
-	git submodule update --init --remote bisare_sim_rs || true # fail silently if no connexion
+	git submodule update --init --remote bisare_sim_rs || \
+	    git clone https://gitea.jthillard.fr/mwa/bisare_sim_rs || true # fail silently if no connexion
 	cargo -C bisare_sim_rs -Z unstable-options build --release -p asm
 	cargo -C bitmap_to_asm -Z unstable-options build --release
 
